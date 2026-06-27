@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --mainHeight: 820px;
+    --sideWidth: 320px;
+    --slideDuration: 0.5s;
+    --space: 10px;
+}
+
+html {
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0px 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D4D3D2;
+}
+
+#container {
+    position: relative;
+    display: flex;
+    transition: Transform var(--slideDuration) ease-in-out;
+}
+
+.moveLeft {
+    transform: translateX(calc(var(--sideWidth) / -2 + var(--space)));
+}
+
+#mainContainer {
+    width: 1450px;
+    height: var(--mainHeight);
+    display: flex;
+    justify-content: space-between;
+    background-color: whitesmoke;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 2;
+}
+
+#sideMenuBtn {
+    all: unset;
+    width: 30px;
+    font-size: 30px;
+    background-color: #0D69AC;
+    color: white;
+}
+
+#sideMenuBtn:hover {
+    cursor: pointer;
+    background-color: #0B5C96;
+}
+
+#sideMenuBtn:active {
+    background-color: #0A4D7B;
+}
+
+i {
+    transition: transform var(--slideDuration) linear;
+}
+
+.rotateArrow {
+    transform: rotate(180deg);
+}
+
+#content {
+    width: 100%;
+    height: 100%;
+}
+
+#sideContainer {
+    width: var(--sideWidth);
+    height: var(--mainHeight);
+    background-color: #ebebeb;
+    border-radius: 0px 15px 15px 0px;
+    position: absolute;
+    right: 0;
+    transition: transform var(--slideDuration) ease-in-out;
+}
+
+.moveRight {
+    transform: translateX(calc(var(--sideWidth) - var(--space)));
+}

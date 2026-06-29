@@ -169,3 +169,15 @@ i {
 .editBtn:hover {
     background-color: #f8a552;
 }
+
+.tag {
+    padding: 5px;
+    width: fit-content;
+    font-size: 12px;
+    border-radius: 5px;
+    color: white;
+}
+
+.selected {
+    background-color: #0d6aac80 !important;
+}

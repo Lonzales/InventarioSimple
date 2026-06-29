@@ -4,7 +4,7 @@ function crearConexion() {
     //Datos de la BD
     $servidor = "localhost";
     $usuario = "root";
-    $password = "1234"; // <- Contraseña en caso de ser necesaria
+    $password = ""; // <- Contraseña en caso de ser necesaria
     $basededatos = "inventariosimple";
 
     $conexion = mysqli_connect($servidor, $usuario, $password, $basededatos);

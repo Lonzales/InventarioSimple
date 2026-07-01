@@ -44,8 +44,44 @@
                 <i class="bx bx-caret-right"></i>
             </button>
         </div>
+
         <div id="sideContainer">
             <h1>Side Menu</h1>
+            <form id="mainForm">
+                <input id="itemId" name="itemId" type="number" hidden/>
+                <div class="inputContainer">
+                    <label for="itemName">Item Name <span style="color: red;">*</span></label>
+                    <input id="itemName" name="itemName" type="text" class="input" maxlength="25"/>
+                </div>
+                
+                <div class="inputContainer">
+                    <label for="itemDesc">Item Description <span style="color: red;">*</span></label>
+                    <textarea id="itemDesc" name="itemDesc" class="input textarea" maxlength="60"></textarea>
+                </div>
+
+                <div class="inputContainer">
+                    <label>Item Tag</label>
+                    <span class="input selectInput">
+                        <p>Select Tags</p>
+                        <i class="bx bx-caret-down"></i>
+                        <div class="selectContent">
+                            <div id="tagsDropMenu" class="contentContainer">
+                                <p>Loading...</p>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+
+                <div class="inputContainer">
+                    <label for="itemPrice">Item Price <span style="color: red;">*</span></label>
+                    <input id="itemPrice" name="itemPrice" type="number" class="input" min="1" step="1" maxlength="10"/>
+                </div>
+
+                <div class="optionsMenu">
+                    <button id="addRowBtn" class="btn addBtn bx bx-plus" type="submit"></button>
+                    <button id="cancelRowBtn" class="btn deleteBtn bx bx-x" type="button"></button>
+                </div>
+            </form>
         </div>
     </div>
 

@@ -42,6 +42,7 @@ button:focus {
     transform: translateX(calc(var(--sideWidth) / -2 + var(--space)));
 }
 
+/* Todo lo relacionado a mainContainer */
 #mainContainer {
     width: 1450px;
     height: var(--mainHeight);
@@ -77,34 +78,6 @@ i {
 
 .rotateArrow {
     transform: rotate(180deg);
-}
-
-#content {
-    width: 100%;
-    height: 100%;
-    padding: 60px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#sideContainer {
-    padding: 20px 12px;
-    width: var(--sideWidth);
-    height: var(--mainHeight);
-    background-color: #ebebeb;
-    border-radius: 0px 15px 15px 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    right: 0;
-    transition: transform var(--slideDuration) ease-in-out;
-}
-
-.moveRight {
-    transform: translateX(calc(var(--sideWidth) - var(--space)));
 }
 
 .table {
@@ -145,6 +118,125 @@ i {
     gap: 10px;
 }
 
+.tag {
+    padding: 5px;
+    width: fit-content;
+    font-size: 12px;
+    border-radius: 5px;
+    color: white;
+}
+
+.selected {
+    background-color: #0d6aac80 !important;
+}
+
+#content {
+    width: 100%;
+    height: 100%;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+/* Fin */
+/* Todo lo relacionado a sideContainer */
+#sideContainer {
+    padding: 20px 24px;
+    gap: 40px;
+    width: var(--sideWidth);
+    height: var(--mainHeight);
+    background-color: #ebebeb;
+    border-radius: 0px 15px 15px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    transition: transform var(--slideDuration) ease-in-out;
+}
+
+.moveRight {
+    transform: translateX(calc(var(--sideWidth) - var(--space)));
+}
+
+#mainForm {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 20px;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input {
+    all: unset;
+    padding: 5px 10px;
+    border: 2px solid gray;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.input:focus {
+    border-color: blue;
+}
+
+.input.error {
+    animation: inputError 0.5s ease-in-out;
+}
+
+@keyframes inputError {
+    0% { 
+        box-shadow: 0 0 0 4px rgba(255, 0, 0, 0); 
+    }
+    50% { 
+        box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.5); 
+    }
+    100% { 
+        box-shadow: 0 0 0 4px rgba(255, 0, 0, 0); 
+    }
+}
+
+.textarea {
+    max-height: 150px;
+    min-height: 150px;
+}
+
+.selectInput {
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+    position: relative;
+}
+
+.selectContent {
+    width: 100%;
+    max-height: 450px;
+    background-color: white;
+    border: 2px solid gray;
+    border-radius: 0px 0px 10px 10px;
+    top: calc(100%);
+    left: 0;
+    position: absolute;
+    display: none;
+}
+
+.contentContainer {
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+}
+/* Fin */
 .btn {
     all: unset;
     cursor: pointer;
@@ -170,14 +262,10 @@ i {
     background-color: #f8a552;
 }
 
-.tag {
-    padding: 5px;
-    width: fit-content;
-    font-size: 12px;
-    border-radius: 5px;
-    color: white;
+.addBtn {
+    background-color: #008000;
 }
 
-.selected {
-    background-color: #0d6aac80 !important;
+.addBtn:hover {
+    background-color: #006400;
 }

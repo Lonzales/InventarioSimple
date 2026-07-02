@@ -22,7 +22,7 @@ function cerrarConexion($conexion) {
     }
 }
 
-// Automatización de la ejecución de querys
+// Automatización de la ejecución de querys de consulta
 function ejecutarSql($conexion, $sql, $value) {
     $stmt = mysqli_prepare($conexion, $sql);
 
@@ -43,6 +43,7 @@ function ejecutarSql($conexion, $sql, $value) {
     return null;
 }
 
+// Función complementaria para ejecutar consultas de eliminación
 function ejecutarSqlEliminar($conexion, $sql, $value) {
     $stmt = mysqli_prepare($conexion, $sql);
 
@@ -85,6 +86,7 @@ function consultarTodo($conexion) {
     return ['success' => false, 'message' => 'Database preparation error'];
 }
 
+// Función para consultar todas las tags
 function consultarTodoTags($conexion) {
     if ($conexion instanceof mysqli) {
         $sql = 'SELECT * FROM tags';
@@ -111,6 +113,7 @@ function consultarTags($conexion, $id) {
     return null;
 }
 
+// Función para agregar items
 function agregarItem($conexion, $itemName, $description, $price, $tags) {
     if ($conexion instanceof mysqli) {
         $sql = 'INSERT INTO items (itemName, description, price) VALUES (?, ?, ?)';
@@ -122,17 +125,8 @@ function agregarItem($conexion, $itemName, $description, $price, $tags) {
             $itemId = mysqli_insert_id($conexion);
             mysqli_stmt_close($stmt);
 
-            if ($tags !== null) {
-                $sqlTag = 'INSERT INTO tags_items (item_id, tag_id) VALUES (?, ?)';
-                $stmtTag = mysqli_prepare($conexion, $sqlTag);
-                foreach ($tags as $tagId) {
-                    if ($stmtTag) {
-                        mysqli_stmt_bind_param($stmtTag, 'ii', $itemId, $tagId);
-                        mysqli_stmt_execute($stmtTag);
-                    }
-                }
-                mysqli_stmt_close($stmtTag);
-            }
+            if ($tags !== null) // Si tiene tags, son agregadas a la tabla intermedia del item en cuestion
+                agregarTagsaItem($conexion, $itemId, $tags);
 
             return ['success' => true, 'message' => 'Item added successfully'];
         }
@@ -141,12 +135,56 @@ function agregarItem($conexion, $itemName, $description, $price, $tags) {
     return ['success' => false, 'message' => 'Error adding item'];
 }
 
+// Función para actualizar items
+function actualizarItem($conexion, $itemId, $itemName, $description, $price, $tags) {
+    if ($conexion instanceof mysqli) {
+        $sql = 'UPDATE items SET itemName = ?, description = ?, price = ? WHERE id = ?';
+        $stmt = mysqli_prepare($conexion, $sql);
+
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, 'ssdi', $itemName, $description, $price, $itemId);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+            
+            $sqlDeleteTags = 'DELETE FROM tags_items WHERE item_id = ?'; // Se eliminan las tags existentes para el item antes de agregar las nuevas
+            $stmtDeleteTags = mysqli_prepare($conexion, $sqlDeleteTags);
+            if ($stmtDeleteTags) {
+                mysqli_stmt_bind_param($stmtDeleteTags, 'i', $itemId);
+                mysqli_stmt_execute($stmtDeleteTags);
+                mysqli_stmt_close($stmtDeleteTags);
+            }
+            
+            if ($tags !== null) // Si tiene tags, son agregadas a la tabla intermedia del item en cuestion
+                agregarTagsaItem($conexion, $itemId, $tags);
+        }
+
+        return ['success' => true, 'message' => 'Item updated successfully'];
+    }
+    return ['success' => false, 'message' => 'Error updating item'];
+}
+
+// Función para eliminar un item
 function eliminarItem($conexion, $id) {
     if ($conexion instanceof mysqli) {
         $sql = 'DELETE FROM items
             WHERE id = ?';
     
         return ejecutarSqlEliminar($conexion, $sql, $id);
+    }
+}
+
+// Función intermedia para agregar tags a un item
+function agregarTagsaItem($conexion, $itemId, $tags) {
+    if ($conexion instanceof mysqli) {
+        $sqlTag = 'INSERT INTO tags_items (item_id, tag_id) VALUES (?, ?)';
+        $stmtTag = mysqli_prepare($conexion, $sqlTag);
+        if ($stmtTag) {
+            foreach ($tags as $tagId) { // Se agregan las tags a la tabla intermedia
+                mysqli_stmt_bind_param($stmtTag, 'ii', $itemId, $tagId);
+                mysqli_stmt_execute($stmtTag);
+            }
+        }
+        mysqli_stmt_close($stmtTag);
     }
 }
 ?>

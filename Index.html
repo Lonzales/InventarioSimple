@@ -17,6 +17,7 @@
 <body>
     <div id="container">
         <div id="mainContainer">
+            <!-- Aqui va la tabla-->
             <div id="content">
                 <table id="table" class="table">
                     <thead>
@@ -34,19 +35,22 @@
                         </tr>
                     </tbody>
                 </table>
-
+                <!-- Menú de opciones -->
                 <div class="optionsMenu">
                     <button id="editRowBtn" class="btn editBtn">Edit Data</button>
                     <button id="removeRowBtn" class="btn deleteBtn">Remove Data</button>
                 </div>
             </div>
+            <!-- Botón del menú lateral -->
             <button id="sideMenuBtn">
                 <i class="bx bx-caret-right"></i>
             </button>
         </div>
 
+        <!-- Comienzo del menú lateral -->
         <div id="sideContainer">
-            <h1>Side Menu</h1>
+            <h1>Add Item</h1>
+            <!-- Comienza el formulario -->
             <form id="mainForm">
                 <input id="itemId" name="itemId" type="number" hidden/>
                 <div class="inputContainer">
@@ -84,6 +88,11 @@
             </form>
         </div>
     </div>
+
+    <!-- Comienzo de las notificaciones -->
+     <div id="notificationContainer">
+        
+     </div>
 
     <script src="js/Script.js"></script>
 </body>

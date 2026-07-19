@@ -3,8 +3,16 @@ let tableBody = $('#tableBody');
 let elementos = [];
 let selected = null;
 
+// Función para escapar texto
+const escaparHTML = (texto) => 
+    texto.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
 // Función para automatizar la creación de etiquetas
-const crearTag = (data) => Array.isArray(data) ? data.map(item => `<span class='tag' style="background-color: ${item.color};">${item.tag}</span>`).join('') : '';
+const crearTag = (data) => Array.isArray(data) ? data.map(item => `<span class='tag' style="background-color: ${escaparHTML(item.color)};">${escaparHTML(item.tag)}</span>`).join('') : '';
 
 // Función para generar notificaciones
 const generarNotificacion = (mensaje) => {
@@ -12,7 +20,7 @@ const generarNotificacion = (mensaje) => {
             <div style="display: flex;">
                 <i class="${mensaje.success ? 'bx bx-check' : 'bx bx-x'}" style="color: ${mensaje.success ? 'green' : 'red'};"></i> <p>${mensaje.success ? 'Success' : 'Error'}</p>
             </div>
-            <p id="notificationMessage">${mensaje.message}</p>
+            <p id="notificationMessage">${escaparHTML(mensaje.message)}</p>
             <span class="timer"></span>
     </div>`);
 
@@ -26,14 +34,14 @@ const llenarTabla = (data) => {
     if (!Array.isArray(data)) {
         // Se muestra un mensaje en caso de no tener información
         $(tableBody).html(`<tr>
-            <td colspan='4'>${data}</td>
+            <td colspan='4'>${escaparHTML(data)}</td>
         </tr>`);
         return;
     }
     
     $(tableBody).html(data.map(item => `<tr data-id='${item.id}'>
-            <td>${item.itemName}</td>
-            <td>${item.description}</td>
+            <td>${escaparHTML(item.itemName)}</td>
+            <td>${escaparHTML(item.description)}</td>
             <td>${item.price}</td>
             <td>
                 <div style='display: flex; gap: 2px'>${crearTag(item.tags)}</div>
@@ -44,13 +52,13 @@ const llenarTabla = (data) => {
 // Función para llenar el menú de selección de tags
 const llenarSelectTags = (data) => {
     if (!Array.isArray(data)) {
-        $('#tagsDropMenu').html(`<p>${data}</p>`);
+        $('#tagsDropMenu').html(`<p>${escaparHTML(data)}</p>`);
         return;
     }
 
     $('#tagsDropMenu').html(data.map(item => `<span>
         <input id="tag${item.id}" name="tags[]" type="checkbox" value="${item.id}"/>
-        <label for="tag${item.id}">${item.tag}</label>
+        <label for="tag${item.id}">${escaparHTML(item.tag)}</label>
     </span>`).join(''));
 }
 
